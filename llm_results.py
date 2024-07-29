@@ -1,4 +1,3 @@
-import yt_dlp
 import assemblyai as aai
 
 def transcribe(api_key, filename):

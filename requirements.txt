@@ -1,0 +1,6 @@
+streamlit
+pandas
+json
+assemblyai
+yt_dlp
+requests

@@ -39,7 +39,6 @@ with keys.expander("Enter your API key"):
     #     type="password",
     # )
     yt_api_key = os.environ.get("YOUTUBE_API_KEY")
-    yt_api_key = "AIzaSyD56dGte-_Fy_F7sNh8VUeg9zdpEyHBdi4"
 
 # get keyword from user
 st.subheader("Which product would you like to buy?")

@@ -5,26 +5,26 @@ from strip_audio import download_save_audio
 from llm_results import *
 import os
 
-st.set_page_config(layout="wide")
+st.set_page_config()
 
 if "product_name_submitted" not in st.session_state:
     st.session_state["product_name_submitted"] = False
 
-intro, explanation = st.columns(2)
-intro.title("👀 Generate Pros and Cons from YouTube Reviews")
-intro.markdown("🕒 Save 100x time, get 100% of the value ⭐")
-intro.markdown(
+# intro, explanation = st.columns(2)
+st.title("👀 Generate Pros and Cons from YouTube Reviews")
+st.markdown("🕒 Save 100x time, get 100% of the value ⭐")
+st.markdown(
     "Enter the name of the product you have your eye on, and receive the most commonly discussed pros and cons in YouTube review videos."
 )
 
-input, keys = st.columns(2)
+keys, input = st.columns(2)
 
 keys.markdown("#### Quick setup")
 
-with keys.expander("Enter your API keys"):
+with keys.expander("Enter your API key"):
     # aai_col, yt_col = keys.columns(2)
     st.markdown(
-        "* Get a Free AssemblyAI API Key [here](https://www.assemblyai.com/?utm_source=youtube&utm_medium=referral&utm_campaign=yt_mis_68) and a YouTube data API key [here](https://developers.google.com/youtube/registering_an_application)."
+        "* Get a Free AssemblyAI API Key [here](https://www.assemblyai.com/?utm_source=youtube&utm_medium=referral&utm_campaign=yt_mis_68)."# and a YouTube data API key [here](https://developers.google.com/youtube/registering_an_application)."
     )
     aai_api_key = st.text_input(
         "Please input your AssemblyAI API key",
@@ -39,15 +39,16 @@ with keys.expander("Enter your API keys"):
     #     type="password",
     # )
     yt_api_key = os.environ.get("YOUTUBE_API_KEY")
+    yt_api_key = "AIzaSyD56dGte-_Fy_F7sNh8VUeg9zdpEyHBdi4"
 
 # get keyword from user
-input.subheader("Which product would you like to buy?")
-product = input.text_input(
+st.subheader("Which product would you like to buy?")
+product = st.text_input(
     "The name of the product you'd like to analyse the reviews of."
 )
 search_phrase = product + " review"
 
-if input.button("Search for review videos on YouTube"):
+if st.button("Search for review videos on YouTube"):
     st.session_state["product_name_submitted"] = True
 
 if st.session_state["product_name_submitted"]:

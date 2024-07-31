@@ -24,7 +24,7 @@ keys.markdown("#### Quick setup")
 with keys.expander("Enter your API key"):
     # aai_col, yt_col = keys.columns(2)
     st.markdown(
-        "* Get a Free AssemblyAI API Key [here](https://www.assemblyai.com/?utm_source=youtube&utm_medium=referral&utm_campaign=yt_mis_68)."# and a YouTube data API key [here](https://developers.google.com/youtube/registering_an_application)."
+        "* Get a Free AssemblyAI API Key [here](https://www.assemblyai.com/?utm_source=youtube&utm_medium=referral&utm_campaign=yt_mis_69)."# and a YouTube data API key [here](https://developers.google.com/youtube/registering_an_application)."
     )
     aai_api_key = st.text_input(
         "Please input your AssemblyAI API key",

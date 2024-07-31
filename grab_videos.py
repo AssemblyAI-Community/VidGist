@@ -39,9 +39,12 @@ def search_yt(api_key, search_phrase):
 def refine_results(raw_results):
     all_videos = []
 
-    for res in raw_results:
-        video_data = extract_video_data(res)
-        all_videos.append(video_data)
+    if raw_results != None:
+        for res in raw_results:
+            video_data = extract_video_data(res)
+            all_videos.append(video_data)
+    else:
+        return None
 
     return all_videos
 

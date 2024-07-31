@@ -9,9 +9,10 @@ st.set_page_config(layout="wide")
 if "product_name_submitted" not in st.session_state:
     st.session_state["product_name_submitted"] = False
 
-st.title("👀 Generate Pros and Cons from YouTube Reviews")
-st.markdown("🕒 Save 100x time, get 100% of the value ⭐")
-st.markdown(
+intro, explanation = st.columns(2)
+intro.title("👀 Generate Pros and Cons from YouTube Reviews")
+intro.markdown("🕒 Save 100x time, get 100% of the value ⭐")
+intro.markdown(
     "Enter the name of the product you have your eye on, and receive the most commonly discussed pros and cons in YouTube review videos."
 )
 
@@ -50,52 +51,57 @@ if st.session_state["product_name_submitted"]:
     # send keyword to yt and get video links
     video_list = search_yt(yt_api_key, search_phrase)
 
-    # have user select videos
-    video_data = pd.DataFrame(video_list)
-    with st.form("data"):
-        selected_df = st.data_editor(
-            video_data,
-            column_config={
-                "video_thumbnail": st.column_config.ImageColumn(
-                    "Video Thumbnail", help="Streamlit app preview screenshots"
-                ),
-                "video_selected": st.column_config.CheckboxColumn(
-                    "Select",
-                    help="Select videos to analyse",
-                    default=False
-                ),
-                "video_link": st.column_config.LinkColumn(
-                    "Link to the video", disabled=True
-                ),
-                "channel_link": st.column_config.LinkColumn(
-                    "Link to the channel", disabled=True
-                ),
-            },
-            hide_index=True,
-        )
-        submitted = st.form_submit_button("Submit")
+    if video_list is None:
+        st.error('Make sure your YouTube Data API Key is correct.', icon="🚨")
+
+    else:
+
+        # have user select videos
+        video_data = pd.DataFrame(video_list)
+        with st.form("data"):
+            selected_df = st.data_editor(
+                video_data,
+                column_config={
+                    "video_thumbnail": st.column_config.ImageColumn(
+                        "Video Thumbnail", help="Streamlit app preview screenshots"
+                    ),
+                    "video_selected": st.column_config.CheckboxColumn(
+                        "Select",
+                        help="Select videos to analyse",
+                        default=False
+                    ),
+                    "video_link": st.column_config.LinkColumn(
+                        "Link to the video", disabled=True
+                    ),
+                    "channel_link": st.column_config.LinkColumn(
+                        "Link to the channel", disabled=True
+                    ),
+                },
+                hide_index=True,
+            )
+            submitted = st.form_submit_button("Submit")
 
     # send video links to strip audio and send audio files to llm
 
-    if submitted:
-        urls = selected_df[selected_df["video_selected"] == "True"][
-            "video_link"
-        ].tolist()
+        if submitted:
+            urls = selected_df[selected_df["video_selected"] == "True"][
+                "video_link"
+            ].tolist()
 
-        id_list = []
+            id_list = []
 
-        for url in urls:
-            filename = download_save_audio(url)
-            id = transcribe(aai_api_key, filename)
-            id_list.append(id)
+            for url in urls:
+                filename = download_save_audio(url)
+                id = transcribe(aai_api_key, filename)
+                id_list.append(id)
 
-        pros, cons = group_analyse(id_list)
+            pros, cons = group_analyse(id_list)
 
-        # show results of llm analysis
-        pros_col, cons_col = st.columns(2)
+            # show results of llm analysis
+            pros_col, cons_col = st.columns(2)
 
-        pros_col.subheader("✅ Pros")
-        pros_col.markdown(pros)
+            pros_col.subheader("✅ Pros")
+            pros_col.markdown(pros)
 
-        cons_col.subheader("❌ Cons")
-        cons_col.markdown(cons)
+            cons_col.subheader("❌ Cons")
+            cons_col.markdown(cons)

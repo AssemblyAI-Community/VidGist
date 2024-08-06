@@ -5,6 +5,7 @@ This is a webapp to extract insights from product review videos on YouTube with 
 
 👆 Try it here: https://vidgist.onrender.com
 
+![App screenshot](app_screenshot.png)
 
 ## 🔑 What you need for this app:
 * An AssemblyAI API Key: [get it here](https://www.assemblyai.com/?utm_source=youtube&utm_medium=referral&utm_campaign=yt_mis_69)

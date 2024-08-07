@@ -9,6 +9,12 @@ st.set_page_config()
 
 if "product_name_submitted" not in st.session_state:
     st.session_state["product_name_submitted"] = False
+    st.session_state["aai_api_key"] = ""
+
+## callback function to save the AssemblyAI API key
+def save_key(key):
+    st.session_state["aai_api_key"] = key
+    print("session state updated")
 
 # intro, explanation = st.columns(2)
 st.title("👀 Generate Pros and Cons from YouTube Reviews")
@@ -32,6 +38,7 @@ with keys.expander("Enter your API key"):
         label_visibility="collapsed",
         type="password",
     )
+    st.button("Submit", on_click=save_key, args=(aai_api_key,))
     # yt_api_key = st.text_input(
     #     "Please input your Google YouTube Data API key",
     #     placeholder="Your Google YouTube Data API key",
@@ -93,7 +100,7 @@ if st.session_state["product_name_submitted"]:
 
             for url in urls:
                 filename = download_save_audio(url)
-                id = transcribe(aai_api_key, filename)
+                id = transcribe(st.session_state["aai_api_key"], filename)
                 id_list.append(id)
 
             pros, cons = group_analyse(id_list)

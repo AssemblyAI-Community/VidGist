@@ -26,3 +26,4 @@ def group_analyse(ids_list):
     )
 
     return pros_result.response, cons_result.response
+

@@ -26,7 +26,7 @@ def extract_video_data(video_json):
 
 
 def search_yt(api_key, search_phrase):
-    search_url = f"https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&order=relevance&q={search_phrase}&key={api_key}"
+    search_url = f"https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=8&order=relevance&q={search_phrase}&key={api_key}"
     json_video_info = requests.get(search_url)
 
     video_data = json.loads(json_video_info.text)

@@ -3,7 +3,6 @@ from grab_videos import search_yt
 from strip_audio import download_save_audio
 from llm_results import *
 import pandas as pd
-import os
 
 if "aai_api_key" and "search_keyword" and "analysis_submitted" not in st.session_state:
     st.session_state["aai_api_key"] = ""
@@ -70,6 +69,8 @@ product = st.text_input(
 )
 search_phrase = product + " review"
 st.button("Search!", on_click=save_keyword, args=(search_phrase,))
+# if st.button("Search for review videos on YouTube"):
+#     st.session_state["product_name_submitted"] = True
 
 if st.session_state["aai_api_key"] == "" and st.session_state["search_keyword"] != "":
     st.error("Please fill in your AssemblyAI API Key.", icon="🚨")
@@ -80,7 +81,8 @@ if st.session_state["aai_api_key"] != "" and st.session_state["search_keyword"] 
     video_list = None
 
     if not st.session_state["analysis_submitted"]:
-        yt_api_key = os.environ.get("YOUTUBE_API_KEY")
+        # yt_api_key = os.environ.get("YOUTUBE_API_KEY")
+        yt_api_key = "AIzaSyB69VHbGyFdRcEaWP8uDtd6hyJSIT14gvA"
         video_list = search_yt(yt_api_key, st.session_state["search_keyword"])
     else:
         video_list = st.session_state["video_list"]
@@ -127,8 +129,8 @@ if st.session_state["aai_api_key"] != "" and st.session_state["search_keyword"] 
             submitted = st.form_submit_button("Submit", on_click=update_analysis_state, args=(video_list,))
 
         if st.session_state["analysis_submitted"]:
-            # gives a list of True or False based on which checkboxes were checked
             print(vid1, vid2, vid3, vid4, vid5, vid6, vid7, vid8)
+            # gives a list of True or False based on which checkboxes were checked
             bool_list = [vid1, vid2, vid3, vid4, vid5, vid6, vid7, vid8]
 
             video_df = pd.DataFrame(video_list)
@@ -137,9 +139,10 @@ if st.session_state["aai_api_key"] != "" and st.session_state["search_keyword"] 
 
             print(urls)
             id_list = []
+            urls = ["bJw8iEEi7Ac.mp3","C2sMohubw6w.mp3"]
 
             for url in urls:
-                filename = download_save_audio(url)
+                # filename = download_save_audio(url)
                 filename = url
                 id = transcribe(st.session_state["aai_api_key"], filename)
                 id_list.append(id)

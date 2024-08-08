@@ -12,7 +12,7 @@ def transcribe(api_key, filename):
 
 
 def group_analyse(ids_list):
-    print("Starting analysis")
+    print("Starting analysis of pros and cons")
     transcript_group = aai.TranscriptGroup.get_by_ids(ids_list)
 
     pros_prompt = "Create a list of pros about the product at hand, commonly mentioned in these video reviews. Limit it to 10 most relevant points. Only return the pros as a list, do not return any other text."

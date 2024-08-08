@@ -10,7 +10,7 @@ P.S.: Due to YouTube blocking the download option, the last step of the app migh
 
 ### To run locally:
 1. Clone this repo
-2. Paste your own YouTube Data API Key on line 83 of main.py (or save your YT API key as an environment variable)
+2. Paste your own YouTube Data API Key on line 86 of main.py (or save your YT API key as an environment variable)
 3. Make sure you have an AssemblyAI account
 4. Run the app with "streamlit run main.py"
 

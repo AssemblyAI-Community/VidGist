@@ -11,7 +11,9 @@ if "aai_api_key" and "search_keyword" and "analysis_submitted" not in st.session
     st.session_state["analysis_submitted"] = False
     st.session_state["video_list"] = None
 
-## callback function to save the AssemblyAI API key
+## callback functions to update session states
+# Streamlit apps run from to to bottom everytime user enters an input
+# SessionStates are used to remember information between these runs
 def save_api_key(key):
     st.session_state["aai_api_key"] = key
     print("aai api key saved")
@@ -24,7 +26,7 @@ def update_analysis_state(video_list):
     st.session_state["analysis_submitted"] = True
     st.session_state["video_list"] = video_list
 
-
+## Title and information about the app
 st.title("👀 Generate Pros and Cons from YouTube Reviews")
 st.markdown("🕒 Save 100x time, get 100% of the value ⭐")
 st.markdown(
@@ -35,7 +37,6 @@ st.markdown(
 keys, input = st.columns(2)
 
 keys.markdown("#### Quick setup")
-
 if st.session_state["aai_api_key"] == "":
     with keys.expander("Enter your API key"):
         
@@ -51,6 +52,8 @@ if st.session_state["aai_api_key"] == "":
         )
         st.button("Submit", on_click=save_api_key, args=(aai_api_key,))
 else:
+    # once the API key is saved in the session state, we change the look of the API key entry form to inform the user
+    # they can still update this API key if they like
     with keys.expander("✅ API key submitted!"):
         st.write("API key saved!")
 

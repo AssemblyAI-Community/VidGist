@@ -84,6 +84,7 @@ if st.session_state["aai_api_key"] != "" and st.session_state["search_keyword"] 
 
     if not st.session_state["analysis_submitted"]:
         yt_api_key = os.environ.get("YOUTUBE_API_KEY")
+        # yt_api_key = "your own YouTube Data API Key"
         video_list = search_yt(yt_api_key, st.session_state["search_keyword"])
     else:
         video_list = st.session_state["video_list"]
